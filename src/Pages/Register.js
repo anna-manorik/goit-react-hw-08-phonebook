@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAddUserMutation } from '../redux/auth/auth-operations';
+import { useAddUserMutation } from '../redux/auth/authApi';
 import styles from './styles.module.css';
 
 export default function Register() {
