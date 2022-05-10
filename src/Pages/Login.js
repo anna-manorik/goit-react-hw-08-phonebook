@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <div>
-      <h1>Страница логина</h1>
+      <h1>Please, login here</h1>
 
       <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
         <label style={styles.label}>
