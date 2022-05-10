@@ -1,35 +1,49 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Notiflix from 'notiflix';
 import NameItem from '../NameItem/NameItem';
 import styles from './nameList.module.css';
-import actions from '../../redux/phonebook/phonebook-action';
-import getVisibleContacts from '../../redux/phonebook/phonebook-selectors';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  useGetContactsQuery,
+  useDeleteContactMutation, 
+  contactsApi
+} from '../../redux/phonebook/phonebookApi';
+import { useSelector } from 'react-redux';
+import { getVisibleContacts } from '../../redux/phonebook/phonebook-selectors';
+import authSelectors from '../../redux/auth/auth-selectors';
+
 
 const NameList = () => {
-  const visibleContacts = useSelector(state => getVisibleContacts(state));
-  const dispatch = useDispatch();
+  const { data: contacts, isFetching } = useGetContactsQuery();
+  const filterValue = useSelector(state => state.filterReducer);
+  const [deleteContact] = useDeleteContactMutation();
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
-  const onDeleteContact = id => dispatch(actions.deleteContact(id));
+
+  const visibleContacts = getVisibleContacts(contacts, filterValue);
+
+  // if(contacts){
+  //   store.dispatch(contactsApi.endpoints.getContacts.initiate());
+  // }
+
+  
 
   return (
     <ul className={styles.list}>
-      {visibleContacts &&
+      {isFetching && <b>Loading...</b>}
+      {visibleContacts && isLoggedIn &&
         visibleContacts.map(({ id, name, number }) => (
           <NameItem
             id={id}
             name={name}
             number={number}
-            onDeleteContact={() => onDeleteContact(id)}
+            onDeleteContact={() => {
+              deleteContact(id);
+              Notiflix.Notify.success('Contact was DELETED succesfully');
+            }}
           />
         ))}
     </ul>
   );
-};
-
-NameList.propTypes = {
-  visibleContacts: PropTypes.array,
-  onDeleteContact: PropTypes.func,
 };
 
 export default NameList;
