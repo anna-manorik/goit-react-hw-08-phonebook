@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import NameItem from '../NameItem/NameItem';
 import styles from './nameList.module.css';
 import actions from '../../redux/phonebook/phonebook-action';
-import { getVisibleContacts } from '../../redux/phonebook/phonebook-selectors';
+import getVisibleContacts from '../../redux/phonebook/phonebook-selectors';
 import { useSelector, useDispatch } from 'react-redux';
 
 const NameList = () => {
