@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import Notiflix from 'notiflix';
 import styles from './form.module.css';
-import actions from '../../redux/phonebook/phonebook-action';
-import { useDispatch } from 'react-redux';
-import { store } from '../../redux/store';
+import { useGetContactsQuery, useAddContactMutation } from '../../redux/phonebook/phonebookApi';
 
 const Form = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
+  const { data } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
+  
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -27,24 +27,24 @@ const Form = () => {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    const contactReduser = store.getState().rootReduser.contactReduser;
-    console.log(contactReduser);
-
-    const checkname = contactReduser.find(contact =>
-      contact.name.toLowerCase().includes(e.currentTarget.elements.name.value.toLowerCase())
+    const checkname = data.find(contact =>
+      contact.name
+        .toLowerCase()
+        .includes(e.currentTarget.elements.name.value.toLowerCase())
     );
 
     if (!checkname) {
-      dispatch(actions.addContact({ name, number }));
+      addContact({ name, number });
+      Notiflix.Notify.success('Contact was ADDED succesfully');
       resetForm();
 
       e.currentTarget.elements.name.value = '';
       e.currentTarget.elements.number.value = '';
     } else {
-      alert(e.currentTarget.elements.name.value + ' is already in contact list');
+      Notiflix.Notify.failure(e.currentTarget.elements.name.value + ' is already in contact list');
     }
   };
 
@@ -86,10 +86,6 @@ const Form = () => {
       </button>
     </form>
   );
-};
-
-Form.propTypes = {
-  onSubmit: PropTypes.func,
 };
 
 export default Form;
