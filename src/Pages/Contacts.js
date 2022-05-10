@@ -4,6 +4,7 @@ import Filter from '../components/Filter/Filter';
 import NameList from '../components/NameList/NameList';
 
 export default function Contacts() {
+
   return (
     <>
       <h1>Phonebook</h1>
