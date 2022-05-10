@@ -2,7 +2,7 @@
 const getContacts = state => state.rootReduser.contactReduser;
 const getFilter = state => state.rootReduser.filterReduser;
 
-export function getVisibleContacts(state) {
+export default function getVisibleContacts(state) {
   const contacts = getContacts(state);
   const filter = getFilter(state);
 
