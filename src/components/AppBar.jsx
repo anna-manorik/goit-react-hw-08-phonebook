@@ -17,17 +17,23 @@ export default function AppBar() {
         >
           Home
         </NavLink>
-        <NavLink
-          to="/contacts"
-          className={({ isActive }) => (isActive ? styles.active : styles.link)}
-        >
-          Contacts
-        </NavLink>
+        
+        {isLoggedIn && (
+          <NavLink
+            to="/contacts"
+            className={({ isActive }) =>
+              isActive ? styles.active : styles.link
+            }
+          >
+            Contacts
+          </NavLink>
+        )}
       </div>
 
-      {isLoggedIn ?
+      {isLoggedIn ? (
         <UserInfo />
-       : (<div>
+      ) : (
+        <div>
           <NavLink
             to="/register"
             className={({ isActive }) =>
@@ -44,7 +50,8 @@ export default function AppBar() {
           >
             Login
           </NavLink>
-        </div>)}
+        </div>
+      )}
     </div>
   );
 }
