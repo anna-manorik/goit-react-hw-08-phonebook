@@ -6,6 +6,8 @@ import Contacts from './Pages/Contacts';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
 import styles from './app.module.css';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 
 function App() {
   return (
@@ -13,10 +15,42 @@ function App() {
       <AppBar />
 
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/contacts" element={<Contacts />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/login" element={<Login />} />
+        <Route
+          exact
+          path="/"
+          element={
+            <PublicRoute exact path="/">
+              <Home />
+            </PublicRoute>
+          }
+        />
+        <Route
+          exact
+          path="/contacts"
+          element={
+            <PrivateRoute path="/contacts" redirectTo="/login">
+              <Contacts />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/register"
+          element={
+            <PublicRoute exact path="/register" restricted>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          exact
+          path="/login"
+          element={
+            <PublicRoute exact path="/login" redirectTo="/contacts" restricted>
+              <Login />
+            </PublicRoute>
+          }
+        />
       </Routes>
     </div>
   );
