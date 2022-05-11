@@ -29,19 +29,25 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
-const persistedReducer = persistReducer(authPersistConfig, reducers);
+// const persistedReducer = persistReducer(authPersistConfig, reducers);
 
 export const store = configureStore({
-  reducer: {persistedReducer},
+  reducer: {
+    [usersApi.reducerPath]: usersApi.reducer,
+    auth: persistReducer(authPersistConfig, authReducer),
+    [contactsApi.reducerPath]: contactsApi.reducer,
+    filterReducer: filterReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(usersApi.middleware).concat(contactsApi.middleware),
+    })
+      .concat(usersApi.middleware)
+      .concat(contactsApi.middleware),
 });
 
 setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
-
