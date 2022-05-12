@@ -16,20 +16,11 @@ import authReducer from './auth/auth-slice';
 import { contactsApi } from './phonebook/phonebookApi';
 import { filterReducer } from './phonebook/phonebook-reducer';
 
-const reducers = combineReducers({
-  [usersApi.reducerPath]: usersApi.reducer,
-  auth: authReducer,
-  [contactsApi.reducerPath]: contactsApi.reducer,
-  filterReducer: filterReducer,
-});
-
 const authPersistConfig = {
   key: 'auth',
   storage,
   whitelist: ['token'],
 };
-
-// const persistedReducer = persistReducer(authPersistConfig, reducers);
 
 export const store = configureStore({
   reducer: {
