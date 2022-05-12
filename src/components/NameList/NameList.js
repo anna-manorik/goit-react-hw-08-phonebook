@@ -4,8 +4,7 @@ import NameItem from '../NameItem/NameItem';
 import styles from './nameList.module.css';
 import {
   useGetContactsQuery,
-  useDeleteContactMutation, 
-  contactsApi
+  useDeleteContactMutation
 } from '../../redux/phonebook/phonebookApi';
 import { useSelector } from 'react-redux';
 import { getVisibleContacts } from '../../redux/phonebook/phonebook-selectors';
@@ -18,14 +17,7 @@ const NameList = () => {
   const [deleteContact] = useDeleteContactMutation();
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
-
   const visibleContacts = getVisibleContacts(contacts, filterValue);
-
-  // if(contacts){
-  //   store.dispatch(contactsApi.endpoints.getContacts.initiate());
-  // }
-
-  
 
   return (
     <ul className={styles.list}>
