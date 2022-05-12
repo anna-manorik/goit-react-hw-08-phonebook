@@ -22,7 +22,7 @@ function App() {
           exact
           path="/"
           element={
-            <PublicRoute exact path="/">
+            <PublicRoute exact path="/"  redirectTo="/login">
               <Home />
             </PublicRoute>
           }
