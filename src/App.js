@@ -1,6 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { useGetCurrentUserQuery } from './redux/auth/authApi';
 import AppBar from './components/AppBar';
@@ -13,13 +11,7 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 
 function App() {
-  const token = useSelector(state => state.auth.token);
-  const [getCurrentUser] = useGetCurrentUserQuery();
-
-
-  useEffect(() => {
-    getCurrentUser(token);
-  }, []);
+  useGetCurrentUserQuery();
 
   return (
     <div className={styles.container}>
