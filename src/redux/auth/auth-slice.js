@@ -11,7 +11,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: (builder) => (
     builder.addMatcher(
       usersApi.endpoints.addUser.matchFulfilled,
       (state, { payload }) => {
@@ -39,11 +39,11 @@ const authSlice = createSlice({
     builder.addMatcher(
       usersApi.endpoints.getCurrentUser.matchFulfilled,
       (state, { payload }) => {
-        state.user = payload.user;
+        state.user.name = payload.name;
         state.isLoggedIn = true;
       }
     )
-  },
+  ),
 });
 
 export default authSlice.reducer;
