@@ -43,10 +43,7 @@ export const usersApi = createApi({
       }),
     }),
     getCurrentUser: builder.query({
-      query: token => ({
-        url: `/users/current`,
-        params: token,
-      }),
+      query: () => '/users/current',
     }),
   }),
 });
@@ -57,3 +54,4 @@ export const {
   useLogoutMutation,
   useGetCurrentUserQuery,
 } = usersApi;
+
