@@ -22,7 +22,7 @@ function App() {
           exact
           path="/"
           element={
-            <PublicRoute exact path="/"  redirectTo="/login">
+            <PublicRoute exact path="/" redirectTo="/login">
               <Home />
             </PublicRoute>
           }
@@ -52,6 +52,14 @@ function App() {
             <PublicRoute exact path="/login" redirectTo="/contacts" restricted>
               <Login />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <PrivateRoute path="/contacts" redirectTo="/login">
+              <Contacts />
+            </PrivateRoute>
           }
         />
       </Routes>
